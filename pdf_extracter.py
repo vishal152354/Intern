@@ -75,7 +75,7 @@ def extract_text_old_api():
 
 
 
-folder_path = r"YOUR_FOLDER_PATH"
+folder_path = r"YOUR_FILE_PATH"
 
 a = check_folder(folder_path)
 if a==0 :
@@ -115,23 +115,27 @@ def get_email(documents):
                 emails.append(email)
 
     return emails
-
+import re
 def get_mobile(documents):
+ 
     mobile = []
-    mobile_pattern = re.compile(r'(?:\+\d{1,3}[ -]?)?\d{7,14}')
+    
+    mobile_pattern = re.compile(r'(?:\(?\d{3}\)?[\s.-]*\d{3}[\s.-]*\d{3,4}|\+?\d{1,3}[\s.-]*\d{7,14})')
+    
     for resume_text in documents:
-        lines = resume_text.split('\n')
-        for line in lines:
-            found_mobile = mobile_pattern.findall(line)
-            for num in found_mobile:
-                
-                clean_num = num.replace(' ', '').replace('-', '').replace('.', '')
-                
-                if len(clean_num) >= 7 and len(clean_num) <= 15: 
-                    mobile.append(clean_num)
+        found_mobiles = mobile_pattern.findall(resume_text) 
+        for num in found_mobiles:
+            
+            
+            clean_num = re.sub(r'[\s().-]', '', num)
+            
+            
+            if 7 <= len(clean_num) <= 15:
+                if num.startswith('+') and not clean_num.startswith('+'):
+                    clean_num = '+' + clean_num
+                mobile.append(clean_num)
 
     return mobile
-
 
 def get_name(content):
     name_lst = []
