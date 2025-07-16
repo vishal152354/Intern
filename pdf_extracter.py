@@ -5,7 +5,7 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
-
+import datetime
 
 def check_folder(folder_path):
     folder = Path(folder_path)
@@ -87,14 +87,15 @@ paths = find_paths_files(folder_path,recursive = False)
 for file in paths:
     print(file)
 
-
+content = []
 for i in range(0,n):
-    content = extract_text_old_api() 
+    content.append(extract_text_old_api()) 
 
-
-print(content) 
-filename = "Extracted_text"
+curr_date = datetime.date.today()
+date_str = curr_date.strftime(r"%d-%m-%y")
+filename = f"Extracted_text_{date_str}"
 with open(filename,"a+",encoding="utf-8") as f_out: 
-    f_out.write(content) 
+    for i in range(len(content)):
+        f_out.write(content[i]) 
 
 f_out.close() 
