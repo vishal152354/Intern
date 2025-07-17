@@ -8,6 +8,15 @@ from pdfminer.layout import LAParams
 import datetime
 import re 
 import csv
+import shutil
+
+class Applicant :
+    def __init__(self,name,mobile,email):
+        self.name = name
+        self.mobile = mobile
+        self.email = email
+    def __str__(self):
+        return f"Name: {self.name}, Email: {self.email}, Phone: {self.mobile}"
 
 
 def check_folder(folder_path):
@@ -37,6 +46,14 @@ def find_paths_files(folder_path,recursive = False):
         if item.is_file():
             file_paths.append(item)
     return file_paths
+def get_file(folder_path):
+    files = int(input("enter the number of files :"))
+    for i in range(files):
+        file_path = input("enter the file path")
+        try:
+            shutil.move(file_path,folder_path)
+        except FileExistsError:
+            return "file already exists"
 
 
 def extract_text_old_api():
@@ -75,7 +92,10 @@ def extract_text_old_api():
 
 
 
-folder_path = r"YOUR_FILE_PATH"
+
+
+folder_path = r"C:\Users\50054\Desktop\intern-Vishal\data"
+
 
 a = check_folder(folder_path)
 if a==0 :
@@ -103,7 +123,6 @@ with open(filename,"a+",encoding="utf-8") as f_out:
 
 f_out.close() 
 
-
 def get_email(documents):
     emails = []
     email_pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
@@ -115,7 +134,7 @@ def get_email(documents):
                 emails.append(email)
 
     return emails
-import re
+
 def get_mobile(documents):
  
     mobile = []
@@ -151,14 +170,23 @@ mobile_info = get_mobile(content)
 name_info = get_name(content)
 details = [mail_info,mobile_info,name_info]
 print(details)
-class Applicant :
-    def __init__(self,name,mobile,email):
-        self.name = name
-        self.mobile = mobile
-        self.email = email
-    def __str__(self):
-        return f"Name: {self.name}, Email: {self.email}, Phone: {self.mobile}"
-    
+
+def get_file():
+    a = int(input("how many files do you want to add :"))
+    if a == 0:
+        print("done!")
+    else:
+        for i in range(a):
+            src_path = input("enter the file path of pdf: ")
+            abs_path = src_path       
+            try:
+                shutil.copy(abs_path, folder_path)
+                print(f"Successfully copied: {abs_path} to {folder_path}")
+            except FileNotFoundError:
+                print(f"Error: File not found at '{abs_path}'. Please check the path.")
+            except Exception as e:
+                print(f"An unexpected error occurred while copying '{abs_path}': {e}")
+
 counting = 0
 applicants = []
 while counting<2:
@@ -173,7 +201,7 @@ print("\nCreated Applicant Objects")
 for app in applicants:
         print(app)
 print(applicants)
-
+get_file()
 csv_filename = "applicants_data.csv" 
 
 try:
