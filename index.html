@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Parser</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Resume Parser and Applicant Manager</h1>
+
+        <section class="section">
+            <h2>Folder Status</h2>
+            <button id="checkFolderBtn">Check Data Folder</button>
+            <p id="folderStatus"></p>
+            <p id="fileCount"></p>
+        </section>
+
+        <section class="section">
+            <h2>Add New Resumes</h2>
+            <p>Select PDF files to upload:</p>
+            <input type="file" id="pdfFilesInput" accept=".pdf" multiple>
+            <button id="uploadFilesBtn">Upload and Process Files</button>
+            <p id="uploadStatus"></p>
+        </section>
+
+        <section class="section">
+            <h2>Extracted Applicant Data</h2>
+            <button id="extractDataBtn">Extract and Display Data</button>
+            <div id="applicantData">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Mobile</th>
+                        </tr>
+                    </thead>
+                    <tbody id="applicantTableBody">
+                        </tbody>
+                </table>
+            </div>
+            <button id="downloadCsvBtn">Download CSV</button>
+            <p id="csvDownloadStatus"></p>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
